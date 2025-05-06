@@ -1,0 +1,68 @@
+<div class="form-container">
+  <h2>Cadastro de Pessoa</h2>
+
+  <div class="form-group">
+    <label for="nome">Nome:</label>
+    <input id="nome" [(ngModel)]="nome" type="text" placeholder="Digite o nome" />
+  </div>
+
+  <div class="form-group">
+    <label for="telefone">Telefone:</label>
+    <input
+      id="telefone"
+      [(ngModel)]="telefone"
+      type="text"
+      mask="(00) 00000-0000"
+      placeholder="(00) 00000-0000"
+      (keypress)="permitirSomenteNumeros($event)"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="idade">Idade:</label>
+    <input id="idade" type="number" [(ngModel)]="idade" placeholder="Digite a idade" />
+  </div>
+
+  <div class="form-group">
+    <label for="genero">Gênero:</label>
+    <select id="genero" [(ngModel)]="genero">
+      <option value="" disabled [selected]="genero === ''">Selecione o gênero</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+      <option value="Outro">Outro</option>
+      <option value="Prefiro não informar">Prefiro não informar</option>
+    </select>
+  </div>
+
+  <div class="button-group">
+    <button class="btn salvar" (click)="salvar()">💾 {{ idEditando !== null ? 'Atualizar' : 'Salvar' }}</button>
+    <button *ngIf="idEditando !== null" class="btn cancelar" (click)="limparCampos()">❌ Cancelar</button>
+  </div>
+</div>
+
+<hr />
+<h3>Pessoas Cadastradas:</h3>
+
+<table class="tabela-pessoas">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Idade</th>
+      <th>Gênero</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of pessoas">
+      <td>{{ p.nome }}</td>
+      <td>{{ p.telefone }}</td>
+      <td>{{ p.idade }}</td>
+      <td>{{ p.genero }}</td>
+      <td>
+        <button class="btn editar" (click)="editar(p, p.id)">✏️ Editar</button>
+        <button class="btn excluir" (click)="excluir(p.id)">🗑️ Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
